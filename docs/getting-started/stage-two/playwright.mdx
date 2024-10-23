@@ -1,0 +1,98 @@
+---
+sidebar_label: "Playwright"
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Stage 2 Integration with Playwright
+
+---
+
+### [Step 0] - Installation of dependencies
+
+<Tabs>
+  <TabItem value="npm" label="npm" default>
+    ```bash
+     npm --save @mapgrab/playwright
+    ```
+  </TabItem>
+  <TabItem value="yarn" label="yarn">
+    ```bash
+     yarn add @mapgrab/playwright
+    ```
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+    ```bash
+     pnpm add @mapgrab/playwright
+    ```
+
+  </TabItem>
+</Tabs>
+
+### [Step 1] - Integration with framework and write first test
+
+:::warning
+
+In the following code, the **mainMap** string is the map identifier given during the installation of the MapGrab interface in stage 1!
+
+:::
+
+<Tabs>
+  <TabItem value="fixture" label="By Fixtures (recomended)" default>
+  
+    :::info
+
+    Read more about [Playwright fixtures](https://playwright.dev/docs/test-fixtures)
+
+    :::
+
+
+    ```ts
+    // support/index.ts
+    import { test as playwrightTest, mergeTests, expect as playwrightExpect, mergeExpects } from '@playwright/test';
+    import { test as mapGrabTest, expect as mapGrabExpect } from '@mapgrab/playwright';
+
+    export const test = mergeTests(playwrightTest, mapGrabTest);
+    export const expect = mergeExpects(playwrightExpect, mapGrabExpect);
+    ```
+
+    ```ts
+    //tests/my-test.spec.ts
+    import { test, expect } from '../support';
+
+    test('Country should display on map', async ({ page, mapLocator, mapController }) => {
+      await page.goto('/');
+      await mapController('mainMap').setView({ zoom: 2, center: [22, 42] });
+      const country = mapLocator('map[id=mainMap] layer[id=countries-fill] filter["all", ["==", ["get", "fid"], 74]]');
+
+      await expect(country).toBeVisibleOnMap();
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="nofixture" label="Without fixtures">
+
+    ```ts
+    //tests/my-test.spec.ts
+    import { test, expect } from '@playwright/test';
+    import { MapLocator, MapController } from '@mapgrab/playwright';
+
+    test('Country should display on map', async ({ page }) => {
+        await page.goto('/');
+        const mapController = new MapController(page, 'mainMap');
+        const country = new MapLocator(
+          page,
+          'map[id=mainMap] layer[id=countries-fill] filter["all", ["==", ["get", "fid"], 74]]'
+        );
+
+        await mapController.setView({ zoom: 2, center: [22, 42] });
+
+        await expect(country).toBeVisibleOnMap();
+    });
+    ```
+
+  </TabItem>
+</Tabs>

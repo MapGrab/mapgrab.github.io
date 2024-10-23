@@ -1,0 +1,96 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+@keyframes mymove {
+  20% {background-position: center;}
+  40% {background-position: top right;}
+  60% {background-position: bottom left;}
+  80% {background-position: bottom right;}
+  100% {background-position: center;}
+}
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  background-color: #000;
+
+  /* &:before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .1);
+  } */
+
+  /* .map-engine--logo {
+    background-image: url(../../static/img/maplibre.svg);
+  } */
+}
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.background {
+  background-image: url(../../static/img/bg.png);
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.7;
+  background-position: top left;
+  animation: mymove 160s infinite;
+  background-size: 120%;
+}
+
+.testFrameworkLogo, .engineLogo {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.text {
+  margin: 20px 0;
+}
+
+.testFrameworkLogo svg, .engineLogo svg {
+  width: 200px;
+  height: 80px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: blue;
+}
+
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .engineLogo {
+    order: 1;
+    margin: 20px 0;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
