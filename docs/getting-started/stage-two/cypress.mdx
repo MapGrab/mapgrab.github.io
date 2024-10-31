@@ -34,7 +34,11 @@ import TabItem from "@theme/TabItem";
 
 ### [Step 1] - Integration with framework
 
+Add this changes to ***support/e2e.ts*** file
+
 ```ts
+//support/e2e.ts
+
 // diff-add
 import { setupCommands } from '@mapgrab/cypress';
 
@@ -47,7 +51,7 @@ setupCommands();
 ### [Step 2] - Write first test
 
 ```ts
-describe('Map tests', { testIsolation: false }, () => {
+describe('Map', { testIsolation: false }, () => {
   it('should display city on map', () => {
     cy.mapLocator('layer[id=cities]').first().should('be.visibleOnMap');
   });
