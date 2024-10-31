@@ -5,6 +5,288 @@ sidebar_position: 1
 
 ## Map Locator
 
-Map Controller provides an api for manipulate a map.
+Locators are the central piece of MapGrab auto-waiting and retry-ability. In a nutshell, locators represent a way to find element(s) on the map at any moment.
+
+--------
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+
+### first
+Returns locator to the first matching element
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      const locator = mapLocator('layer[id=cities]').first();
+
+      await locator.click();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .first<MapLocator>()
+        .then((locator) => locator.click())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### last
+Returns locator to the last matching element
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      const locator = mapLocator('layer[id=cities]').last();
+
+      await locator.click();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .last<MapLocator>()
+        .then((locator) => locator.click())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### nth
+Returns locator to the nth matching element
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      const locator = mapLocator('layer[id=cities]').nth(2);
+
+      await locator.click();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .eq<MapLocator>(2)
+        .then((locator) => locator.click())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### merge
+Returns merged all elements matched to locator
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      const locator = mapLocator('layer[id=cities]').merge(); // Merge all cities
+      const locator2 = mapLocator('layer[id=cities]').merge('countryCode').last(); //Merge city by property: countryCode;
+
+      await locator.click();
+      await locator2.click();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .merge()
+        .then((locator) => locator.click())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### fitMap
+Fit map to locator element bounding box
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      await mapLocator('layer[id=cities]').first().fitMap();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .first()
+        .then((locator) => locator.fitMap())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### click
+Click an element on map
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      await mapLocator('layer[id=cities]').first().click();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .first()
+        .then((locator) => locator.click())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### dblclick
+Double click an element on map
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      await mapLocator('layer[id=cities]').first().dblclick();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .first()
+        .then((locator) => locator.dblclick())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### boundingBox
+Double click an element on map
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator, mapLocator }) => {
+      const controller = mapController('mainMap');
+      const city = mapLocator('layer[id=cities]').first();
+      const bbox = await locator.boundingBox();
+
+      await controller.fitMapToBoundingBox(bbox, { padding: 5 });
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .first()
+        .then((locator) => locator.boundingBox())
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### count
+Returns the number of elements matching the locator.
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      const citiesCount = await mapLocator('layer[id=cities]').count();
+
+      expect(citiesCount).toBe(22);
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapLocator('layer[id=cities]')
+        .then((locator) => locator.count())
+        .should('have.eq', 22);
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### screenshot (playwright only)
+Returns the screenshot for element on map
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapLocator }) => {
+      const snap = await mapLocator('layer[id=cities]').first().screenshot({ padding: 11, backgroundColor: 'red' });
+
+      await expect(snap).toMatchSnapshot('cities.png');
+      ...
+    });
+    ```
+
+  </TabItem>
+</Tabs>
 
 --------
