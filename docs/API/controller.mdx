@@ -327,7 +327,7 @@ Waits until the map is loaded
   <TabItem value="playwright" label="playwright" default>
     ```ts
     test("foo test", async ({ mapController, mapLocator, page }) => {
-      await controller('mainMap').waitToMapLoaded();
+      await mapController('mainMap').waitToMapLoaded();
       ...
     });
     ```
@@ -355,7 +355,7 @@ Waiting for the map to stop painting or moving
   <TabItem value="playwright" label="playwright" default>
     ```ts
     test("foo test", async ({ mapController, mapLocator, page }) => {
-      await controller('mainMap').waitToMapStable();
+      await mapController('mainMap').waitToMapStable();
       await expect(await page.screenshot()).toMatchSnapshot('map-loaded.png');
       ...
     });
@@ -415,7 +415,7 @@ Get map handle its [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/api/map/)
   <TabItem value="playwright" label="playwright" default>
     ```ts
     test("foo test", async ({ mapController, mapLocator, page }) => {
-      const map = await controller('mainMap').getMapInstance();
+      const map = await mapController('mainMap').getMapInstance();
 
       await map.evaluate((map) => map.jumpTo(...));
       ...

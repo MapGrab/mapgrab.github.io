@@ -4,6 +4,10 @@ sidebar_position: 1
 
 # Introduction
 
+MapGrab is a tool that enables the writing of automated map tests based on the MapLibre GL JS and Mapbox GL JS libraries. Please review the following specifications.
+
+---
+
 ## Supported testing frameworks
 
 | Library                                             | Min version | Max version |
