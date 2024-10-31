@@ -1,0 +1,179 @@
+---
+sidebar_label: "Map Controller"
+sidebar_position: 1
+---
+
+# Map Controller
+
+Map Controller provides an api for manipulate a map.
+
+--------
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+
+### enableInspector
+Enable MapGrab inspector on map
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController }) => {
+      const mapController = mapController('mainMap');
+
+      await mapController.enableInspector();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.enableInspector();
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### disableInspector
+Disable MapGrab inspector on map
+
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController }) => {
+      const mapController = mapController('mainMap');
+
+      await mapController.disableInspector();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.disableInspector();
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+--------
+
+### setView
+Set map view based on lng/lat
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController }) => {
+      const mapController = mapController('mainMap');
+
+      await mapController.setView({ center: [11, 12] });
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.setView({ center: [11, 12] });
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+#### Arguments
+
+SetViewOptions
+
+--------
+
+### setViewAbsolute
+Set map view based on screen x/y
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController }) => {
+      const mapController = mapController('mainMap');
+
+      await mapController.setViewAbsolute({ center: [240, 321] });
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.setViewAbsolute({ center: [240, 321] });
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+#### Arguments
+
+SetViewOptions
+
+#### Returns
+`Promise<void>`
+
+--------
+
+### fitMapToBounds
+Fit map to specified bounds
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController }) => {
+      const mapController = mapController('mainMap');
+
+      await mapController.fitMapToBounds([11, 11, 14, 14], { duration: 11 });
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    test("foo test", async ({ mapController }) => {
+      const mapController = mapController('mainMap');
+
+      await mapController.fitMapToBounds([11, 11, 14, 14], { duration: 11 });
+      ...
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+#### Arguments
+
+SetViewOptions
+
+#### Returns
+`Promise<void>`
