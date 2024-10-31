@@ -14,7 +14,7 @@ import TabItem from "@theme/TabItem";
 
 
 ### enableInspector
-Enable MapGrab inspector on map
+Enable MapGrab inspector
 
 <Tabs>
   <TabItem value="playwright" label="playwright" default>
@@ -43,7 +43,7 @@ Enable MapGrab inspector on map
 --------
 
 ### disableInspector
-Disable MapGrab inspector on map
+Disable MapGrab inspector
 
 <Tabs>
   <TabItem value="playwright" label="playwright" default>
@@ -99,10 +99,6 @@ Set map view based on lng/lat
   </TabItem>
 </Tabs>
 
-#### Arguments
-
-SetViewOptions
-
 --------
 
 ### setViewAbsolute
@@ -133,17 +129,10 @@ Set map view based on screen x/y
   </TabItem>
 </Tabs>
 
-#### Arguments
-
-SetViewOptions
-
-#### Returns
-`Promise<void>`
-
 --------
 
 ### fitMapToBounds
-Fit map to specified bounds
+Fit map to specified bounds by lng/lat
 
 #### Usage
 <Tabs>
@@ -160,20 +149,285 @@ Fit map to specified bounds
   </TabItem>
   <TabItem value="cypress" label="cypress">
     ```ts
-    test("foo test", async ({ mapController }) => {
-      const mapController = mapController('mainMap');
-
-      await mapController.fitMapToBounds([11, 11, 14, 14], { duration: 11 });
-      ...
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.fitMapToBounds([11, 11, 14, 14], { duration: 11 });
+      });
     });
     ```
 
   </TabItem>
 </Tabs>
 
-#### Arguments
 
-SetViewOptions
+### fitMapToBoundingBox
+Fit map to specified bounds by screen x/y
 
-#### Returns
-`Promise<void>`
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator }) => {
+      const mapController = mapController('mainMap');
+      const city = mapLocator('layer[id=cities]').first();
+      const bbox = await locator.boundingBox();
+
+      await mapController.fitMapToBoundingBox(bbox, { padding: 5 });
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        const bbox = new MapRect(20, 20, 400, 400)
+
+        controller.fitMapToBoundingBox(bbox, { padding: 5 });
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### exposeLayers
+Hides all layers on the map except the passed
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator }) => {
+      const mapController = mapController('mainMap');
+
+      await mapController.exposeLayers(['cities-label']);
+
+      await expect(await page.screenshot()).toMatchSnapshot('page-with-show-city-label.png');
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.exposeLayers(['cities-label']);
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### revertExposeLayers
+Restores the previous state of layer visibility
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator }) => {
+      const mapController = mapController('mainMap');
+      
+      const exposeState = await mapController.exposeLayers(['cities-label']);
+
+      await expect(await page.screenshot()).toMatchSnapshot('page-with-show-city-label.png');
+
+      await mapController.revertExposeLayers(exposeState);
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.exposeLayers(['countries-label'], ['countries-fill']).then((state) => {
+          controller.revertExposeLayers(state);
+        });
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### projectLngLatToScreenPoint
+Return converted geographic coordinates to screen coordinates
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator, page }) => {
+      const mapController = mapController('mainMap');
+      
+      const { x, y } = await mapController.projectLngLatToScreenPoint({ lng: 12, lat: 11 });
+
+      await page.mouse.click(x, y);
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.projectLngLatToScreenPoint({ lng: 12, lat: 11 }).then(({ x, y }) => {
+          cy.click(x, y);
+        });
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### unprojectLngLatToScreenPoint
+Return converted screen coordinates to geographic coordinates
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator, page }) => {
+      const mapController = mapController('mainMap');
+      
+      const { lng, lat } = await mapController.unprojectLngLatToScreenPoint({ x: 200, y: 200 });
+
+      await expect(lng).toBe(22);
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        controller.unprojectLngLatToScreenPoint({ x: 200, y: 200 }).then(({ lat, lng }) => {
+          ...
+        });
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### waitToMapLoaded
+Waits until the map is loaded
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator, page }) => {
+      await mapController('mainMap').waitToMapLoaded();
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+    it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        return controller.waitToMapLoaded();
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### waitToMapStable
+Waiting for the map to stop painting or moving
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator, page }) => {
+      await mapController('mainMap').waitToMapStable();
+      await expect(await page.screenshot()).toMatchSnapshot('map-loaded.png');
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+     it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        return controller.waitToMapStable();
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### waitToMapRepaint
+Waiting for the map to repaint
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator, page }) => {
+      await Promise.all([
+        page.locator('.show-cities').click(),
+        mapController('mainMap').waitToMapRepaint()
+      ]);
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+     it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        return controller.waitToMapRepaint();
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>
+
+### getMapInstance
+Get map handle its [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/api/map/) or [Maplibre GL JS](https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/) instance
+
+#### Usage
+<Tabs>
+  <TabItem value="playwright" label="playwright" default>
+    ```ts
+    test("foo test", async ({ mapController, mapLocator, page }) => {
+      const map = await mapController('mainMap').getMapInstance();
+
+      await map.evaluate((map) => map.jumpTo(...));
+      ...
+    });
+    ```
+
+  </TabItem>
+  <TabItem value="cypress" label="cypress">
+    ```ts
+     it('foo test', () => {
+      cy.mapController('mainMap').then((controller) => {
+        return mapController('mainMap').getMapInstance().then((map) => {
+          map.evaluate((map) => map.jumpTo(...));
+        });
+      });
+    });
+    ```
+
+  </TabItem>
+</Tabs>

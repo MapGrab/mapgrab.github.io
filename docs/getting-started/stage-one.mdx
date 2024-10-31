@@ -11,7 +11,7 @@ To check in the future whether the installation was successful, you first need t
 
 This is what the extension icon should look like in your browser’s toolbar.
 
-![alt text](../../static/img/extension-inactive.png "Title")
+![alt text](../../static/img/extension-inactive.png "Extension inactive")
 
 ### Step 1 - Buy a license and get private access token
 
@@ -19,7 +19,7 @@ The next step is to install the library that embeds the communication interface 
 
 Your private access token sent in the email should look like this:
 
-![alt text](../../static/img/private-access-token.png "Title")
+![alt text](../../static/img/private-access-token.png "Access Token")
 
 ### Step 2 - Setup .npmrc
 
@@ -64,20 +64,30 @@ To install package run below command
 
 <Tabs>
   <TabItem value="npm" label="npm" default>
-    ```bash npm --save @mapgrab-priv/map-interface ```
+    ```bash
+    npm --save @mapgrab-priv/map-interface
+    ```
   </TabItem>
   <TabItem value="yarn" label="yarn">
-    ```bash yarn add @mapgrab-priv/map-interface ```
+    ```bash
+    yarn add @mapgrab-priv/map-interface
+    ```
   </TabItem>
   <TabItem value="pnpm" label="pnpm">
-    ```bash pnpm add @mapgrab-priv/map-interface ```
+    ```bash
+    pnpm add @mapgrab-priv/map-interface
+    ```
   </TabItem>
 </Tabs>
 
 ### Step 4 - Interface installation
+:::info
 
+To optimize the size of your application for end users, we recommend using lazy loading for the interface.
+
+:::
 <Tabs>
-  <TabItem value="lazy-loaded" label="Lazy Loaded" default>
+  <TabItem value="lazy-loaded" label="Lazy Loaded (recommended)" default>
     ```ts 
       import { Map } from 'maplibre-gl';
       
@@ -129,8 +139,9 @@ To install package run below command
   </TabItem>
 </Tabs>
 
-### Step 5 -Verify the MapGrab interface using the extension
+### Step 5 - Verify the MapGrab interface using the extension
+Now, check if the MapGrab Inspector extension icon has changed color.
+If it has, this means the interface has been installed correctly.
+When you click on the extension icon, the map inspector should open.
 
-If the browser extension icon changes color after navigating to the map page, it means the MapGrab interface has been embedded successfully.
-
-When you click the extension icon, the MapGrab inspector interface should open, allowing you to generate MapGrab selectors.
+![alt text](../../static/img/extension-active.png "Extension active")
