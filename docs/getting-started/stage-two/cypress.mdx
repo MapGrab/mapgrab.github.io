@@ -3,4 +3,53 @@ sidebar_label: "Cypress"
 sidebar_position: 2
 ---
 
-# Stage 2 Cypress
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Stage 2 Integration with Cypress
+
+---
+
+### [Step 0] - Installation of dependencies
+
+<Tabs>
+  <TabItem value="npm" label="npm" default>
+    ```bash
+     npm --save @mapgrab/cypress
+    ```
+  </TabItem>
+  <TabItem value="yarn" label="yarn">
+    ```bash
+     yarn add @mapgrab/cypress
+    ```
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+
+    ```bash
+     pnpm add @mapgrab/cypress
+    ```
+
+  </TabItem>
+</Tabs>
+
+### [Step 1] - Integration with framework
+
+```ts
+// diff-add
+import { setupCommands } from '@mapgrab/cypress';
+
+import './commands';
+
+// diff-add
+setupCommands();
+```
+
+### [Step 2] - Write first test
+
+```ts
+describe('Map tests', { testIsolation: false }, () => {
+  it('should display city on map', () => {
+    cy.mapLocator('layer[id=cities]').first().should('be.visibleOnMap');
+  });
+});
+```
