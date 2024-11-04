@@ -101,8 +101,9 @@ To optimize the size of your application for end users, we recommend using lazy 
           clickTolerance: 5,
         });
 
+        // process.env.RUN_ONLY_IN_TEST_ENV is given as an example
         // diff-add
-        if (process.env.TEST_ENV) {
+        if (process.env.RUN_ONLY_IN_TEST_ENV) {
           // diff-add
           import('@mapgrab-priv/map-interface').then(({ installMapGrab }) => {
             // diff-add
@@ -131,8 +132,13 @@ To optimize the size of your application for end users, we recommend using lazy 
           clickTolerance: 5,
         });
 
+        // process.env.RUN_ONLY_IN_TEST_ENV is given as an example
         // diff-add
-        installMapGrab(map, 'mainMap');
+        if (process.env.RUN_ONLY_IN_TEST_ENV) {
+          // diff-add
+          installMapGrab(map, 'mainMap');
+          // diff-add
+        }
       }
     ```
 
