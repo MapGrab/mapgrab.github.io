@@ -3,6 +3,9 @@ sidebar_label: "Stage 1 - Map Interface Installation"
 sidebar_position: 1
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 # Stage 1 - Map Interface Installation
 
 ### Step 0 - Download chrome extension
@@ -13,69 +16,24 @@ This is what the extension icon should look like in your browser’s toolbar.
 
 ![alt text](../../static/img/extension-inactive.png "Extension inactive")
 
-### Step 1 - Buy a license and get private access token
-
-The next step is to install the library that embeds the communication interface for the map. This interface library is a paid npm package. To purchase a license, complete the purchase process at [PrivJS](https://privjs.com/packages/@mapgrab-priv/map-interface). After successfully completing the purchase, you will receive installation instructions along with a private access token via email.
-
-Your private access token sent in the email should look like this:
-
-![alt text](../../static/img/private-access-token.png "Access Token")
-
-### Step 2 - Setup .npmrc
-
-Next, configure your npm client to authenticate and download the @mapgrab-priv/map-interface library. You can either use our ready-made script for this, or configure it manually.
-
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
-<Tabs>
-  <TabItem value="script" label="Script" default>
-    :::info
-
-    Replace the string **123456** in the code below with a private access token
-
-    :::
-    ```bash
-      npx -y @mapgrab/npm-setup@latest 123456
-    ```
-
-  </TabItem>
-  <TabItem value="manually" label="Manually">
-    1. Create in project root directory .npmrc file if not exists
-    2. Paste to the file (or append on the end) below code
-
-    :::info
-
-    Replace the string **123456** in the code below with a private access token
-
-    :::
-
-    ```
-      @mapgrab-priv:registry=https://r.privjs.com
-      //r.privjs.com/:_authToken=123456
-    ```
-
-  </TabItem>
-</Tabs>
-
-### Step 3 - Package installation
+### Step 1 - Package installation
 
 To install package run below command
 
 <Tabs>
   <TabItem value="npm" label="npm" default>
     ```bash
-    npm --save @mapgrab-priv/map-interface
+    npm --save @mapgrab/map-interface
     ```
   </TabItem>
   <TabItem value="yarn" label="yarn">
     ```bash
-    yarn add @mapgrab-priv/map-interface
+    yarn add @mapgrab/map-interface
     ```
   </TabItem>
   <TabItem value="pnpm" label="pnpm">
     ```bash
-    pnpm add @mapgrab-priv/map-interface
+    pnpm add @mapgrab/map-interface
     ```
   </TabItem>
 </Tabs>
@@ -105,7 +63,7 @@ To optimize the size of your application for end users, we recommend using lazy 
         // diff-add
         if (process.env.RUN_ONLY_IN_TEST_ENV) {
           // diff-add
-          import('@mapgrab-priv/map-interface').then(({ installMapGrab }) => {
+          import('@mapgrab/map-interface').then(({ installMapGrab }) => {
             // diff-add
             installMapGrab(map, 'mainMap');
            // diff-add
@@ -120,7 +78,7 @@ To optimize the size of your application for end users, we recommend using lazy 
     ```ts 
       import { Map } from 'maplibre-gl';
       // diff-add
-      import { installMapGrab } from '@mapgrab-priv/map-interface';
+      import { installMapGrab } from '@mapgrab/map-interface';
 
       function initMap(): void {
         const map = new Map({
