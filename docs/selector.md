@@ -1,4 +1,4 @@
-<!-- ## MapGrab Selector
+## MapGrab Selector
 
 Selector MapGrab is a specific format representing a reference to elements on the map. The syntax is similar to CSS selectors.
 
@@ -48,4 +48,4 @@ For map and layer properties, you can pass the type of matching.
 map[id*=mainMap] layer[id*=cities-label]
 ```
 
-This locator find elements on map which id contains text "**mainMap**" and on layers which id contains text "**cities-label**" -->
+This locator find elements on map which id contains text "**mainMap**" and on layers which id contains text "**cities-label**"
