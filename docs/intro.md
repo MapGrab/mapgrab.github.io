@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-[![Intro video](../static/img/yt-intro.jpg)](https://www.youtube.com/watch?v=Hfp0LDE6vIM)
+<!-- [![Intro video](../static/img/yt-intro.jpg)](https://www.youtube.com/watch?v=Hfp0LDE6vIM) -->
 
 MapGrab is a tool that enables the writing of automated map tests based on the MapLibre GL JS and Mapbox GL JS libraries. Please review the following specifications.
 
