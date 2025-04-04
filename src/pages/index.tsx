@@ -64,7 +64,6 @@ function HomepageHeader() {
             >
               Getting started
             </Link>
-            <iframe src="https://github.com/sponsors/MapGrab/button" title="Sponsor MapGrab" height="32" width="114" style={{ marginTop: '16px', border: 0, borderRadius: '6px' }}></iframe>
           </div>
         </div>
 
