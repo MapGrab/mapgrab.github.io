@@ -29,6 +29,14 @@ const config: Config = {
     locales: ["en"],
   },
 
+  scripts: [
+    {
+      src: "/js/load-buttons.js",
+      async: true,
+      defer: true
+    }
+  ],
+
   presets: [
     [
       "classic",
@@ -63,7 +71,6 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-
   themeConfig: {
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
@@ -86,6 +93,16 @@ const config: Config = {
           label: "GitHub",
           position: "right",
         },
+        {
+          position: 'right',
+          href: "https://github.com/MapGrab/map-grab-packages",
+          label: "Stars",
+          className: "github-button",
+          "data-color-scheme": "no-preference: light; light: light; dark: dark;", 
+          "data-size": "large",
+          "data-show-count": true,
+          'aria-label': "Star buttons/github-buttons on GitHub"
+        }
       ],
     },
     footer: {
